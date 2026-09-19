@@ -3,284 +3,242 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Toronto International Collegiate — Trust. Intelligence. Care.</title>
-<meta name="description" content="Toronto International Collegiate — an inspected Ontario private high school (BSID 669195) offering OSSD credit courses, university preparation, ESL, and IELTS/TOEFL prep in North York.">
+<title>Create with AI — Toronto International Collegiate</title>
+<meta name="description" content="An AI class for Grade 7 to university-prep students at Toronto International Collegiate. Learn AI theory, prompt engineering, connectors & MCP — taught with Claude Code by Anthropic. Plus a math supplement.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0f1a; --bg2:#111a2b; --bg3:#1a2540; --line:#24314e;
+    --cyan:#38bdf8; --cyan2:#2ee6ff; --violet:#8b5cf6; --pink:#f472b6; --amber:#f2b73e;
+    --text:#eef4ff; --dim:#c3d3ec; --mute:#8ea2c4;
+    --head:'Space Grotesk','Segoe UI',sans-serif; --body:'Inter',system-ui,sans-serif;
+  }
+  html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:72px}
+  body{font-family:var(--body);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(120% 80% at 90% -5%, rgba(139,92,246,.5), transparent 55%),
+      radial-gradient(110% 70% at -10% 3%, rgba(56,189,248,.38), transparent 50%),
+      radial-gradient(120% 90% at 50% 118%, rgba(244,114,182,.32), transparent 55%),
+      var(--bg);
+    background-attachment:fixed;overflow-x:hidden}
+  #bgcanvas{position:fixed;inset:0;z-index:-1;pointer-events:none}
+  img{max-width:100%}
+  a{color:var(--cyan);text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:40;background:rgba(10,15,26,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px}
+  .nav .brand{display:flex;align-items:center;gap:10px}
+  .nav .brand img{height:40px;width:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4))}
+  .nav .brand b{font-family:var(--head);font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--text);line-height:1.05}
+  .nav .brand span{display:block;font-size:9px;letter-spacing:.18em;color:var(--cyan);font-weight:600}
+  .nav .cc{margin-left:8px;font-family:var(--head);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--cyan);background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.5);padding:6px 10px;border-radius:8px}
+  .nav a.enroll{font-family:var(--head);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:#04121e;background:var(--cyan);padding:11px 18px;border-radius:10px;white-space:nowrap}
+  .nav a.enroll:hover{background:var(--cyan2)}
+  .nav .ccwrap{display:flex;align-items:center;gap:0}
+
+  /* hero */
+  .hero{padding:52px 0 26px}
+  .hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:36px;align-items:center}
+  .tiers{display:inline-flex;flex-direction:column;gap:1px;font-family:var(--head);color:#04121a;text-align:center;
+    background:linear-gradient(90deg,var(--cyan),#67e8f9);padding:8px 16px;border-radius:12px;margin-bottom:20px;box-shadow:0 6px 20px rgba(56,189,248,.35)}
+  .tiers b{font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+  .tiers span{font-weight:700;font-size:10px;letter-spacing:.04em;text-transform:uppercase}
+  .hero h1{font-family:var(--head);font-weight:700;font-size:clamp(40px,7vw,68px);line-height:.98;letter-spacing:-.01em;text-transform:uppercase}
+  .hero h1 .g{color:var(--cyan2);text-shadow:0 0 30px rgba(56,189,248,.5)}
+  .hero .lead{margin-top:16px;font-size:18px;color:var(--dim);max-width:46ch}
+  .hero .lead b{color:var(--cyan)}
+  .cc-line{margin-top:16px;display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:var(--text);
+    background:rgba(4,18,26,.5);border:1px solid rgba(56,189,248,.45);padding:9px 14px;border-radius:11px}
+  .cc-line b{color:var(--cyan)}
+  .hero-actions{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--head);font-size:13px;font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;padding:14px 24px;border-radius:12px;cursor:pointer;border:1px solid var(--line);transition:.18s}
+  .btn.primary{background:var(--cyan);color:#04121e;border-color:var(--cyan)}
+  .btn.primary:hover{background:var(--cyan2);transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+  .btn.ghost:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(56,189,248,.3)}
+  .hero-img{position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.15);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .hero-img img{display:block;width:100%;height:100%;object-fit:cover}
+
+  /* section scaffold */
+  section{padding:46px 0}
+  .kicker{font-family:var(--head);font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;text-align:center}
+  .sec-title{font-family:var(--head);font-weight:700;font-size:clamp(26px,4vw,38px);text-transform:uppercase;text-align:center;margin-bottom:8px}
+  .sec-lead{text-align:center;color:var(--dim);max-width:60ch;margin:0 auto 30px}
+
+  /* modules */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .card{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:16px;padding:22px 18px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;transition:.2s}
+  .card:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 0 26px rgba(56,189,248,.22)}
+  .card .ic{font-size:26px;width:60px;height:60px;display:flex;align-items:center;justify-content:center;border-radius:50%;
+    background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.28);margin-bottom:14px}
+  .card h3{font-family:var(--head);font-size:17px;margin-bottom:6px;min-height:2.4em;display:flex;align-items:center}
+  .card p{font-size:14px;color:var(--dim)}
+  .ccnote{margin-top:22px;text-align:center;font-size:15px;color:var(--dim)}
+  .ccnote .star{color:var(--amber)}
+  .ccnote b{color:var(--cyan)}
+
+  /* learning outcomes */
+  .outcomes{background:linear-gradient(90deg,rgba(242,183,62,.16),rgba(242,183,62,.04));border:1px solid rgba(242,183,62,.45);
+    border-radius:18px;padding:22px 26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .outcomes .big{font-size:34px;flex:none}
+  .outcomes .lo h3{font-family:var(--head);color:var(--amber);font-size:16px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+  .outcomes .lorow{display:flex;gap:26px;flex-wrap:wrap}
+  .outcomes .lorow span{font-weight:600;color:#f6ead0}
+  .outcomes .lorow span::before{content:"✦ ";color:var(--amber)}
+
+  /* details + enroll */
+  .two{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:stretch}
+  .panel{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:24px 26px}
+  .panel .lbl{font-family:var(--head);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+  .drow{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--dim);margin-bottom:12px}
+  .drow:last-child{margin-bottom:0}
+  .drow .di{flex:none;font-size:18px;width:24px;text-align:center}
+  .drow b{color:var(--text)}
+  .enroll{background:linear-gradient(150deg,rgba(139,92,246,.28),rgba(56,189,248,.12));border-color:rgba(139,92,246,.5);
+    display:flex;gap:18px;align-items:flex-start}
+  .enroll .qr{flex:none;width:120px;height:120px;background:#fff;border-radius:12px;padding:7px}
+  .enroll .qr img{width:100%;height:100%;display:block}
+  .enroll .ei .lbl{margin-bottom:10px}
+  .enroll .ei .row{font-size:14px;margin-bottom:5px}
+  .enroll .ei .row b{color:var(--cyan)}
+
+  /* instructor */
+  .inst{text-align:center;color:var(--dim);font-size:15px;max-width:70ch;margin:0 auto}
+  .inst b{color:var(--text)}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);background:rgba(8,12,20,.6);margin-top:40px}
+  footer .wrap{padding:30px 22px;text-align:center}
+  footer .ft{font-family:var(--head);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  footer .ft span{color:var(--pink)}
+  footer .cp{margin-top:10px;font-size:12.5px;color:var(--mute)}
+
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr;gap:24px}
+    .hero-img{order:-1}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .two{grid-template-columns:1fr}
+    .nav .brand b{display:none}
+  }
+  @media(max-width:520px){
+    .grid{grid-template-columns:1fr}
+    .outcomes{flex-direction:column;align-items:flex-start;text-align:left}
+    .enroll{flex-direction:column;align-items:center;text-align:center}
+  }
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
 </head>
 <body>
 
-<!-- NAV -->
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="#top">
-      <span class="mark">TIC</span>
-      <span class="bt"><b>Toronto Int'l Collegiate</b><span>Trust · Intelligence · Care</span></span>
+      <img src="logo-large.png" alt="Toronto International Collegiate">
+      <span><b>Toronto Int'l Collegiate</b><span>AI Class</span></span>
+      <span class="cc">⚡ Powered by Claude Code</span>
     </a>
-    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.getElementById('navlinks').classList.toggle('open')">☰</button>
-    <nav class="nav-links" id="navlinks">
-      <a href="#about">About</a>
-      <a href="#academics">Academic</a>
-      <a href="#admission">Admission</a>
-      <a href="#events">News &amp; Events</a>
-      <a href="#services">Service</a>
-      <a href="#staff">Staff</a>
-      <a class="cta" href="#contact">Contact</a>
-    </nav>
+    <a class="enroll" href="#enroll">Enroll</a>
   </div>
 </header>
-
 <a id="top"></a>
 
 <!-- HERO -->
-<section class="hero" id="home">
-  <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <span class="tag-pill"><span class="dot"></span> Trust · Intelligence · Care</span>
-        <h1>Toronto <span class="grad">International</span> Collegiate</h1>
-        <p class="lead">An inspected Ontario private high school in North York — delivering Ministry-accredited credit courses toward the OSSD, university preparation, and world-class language training in a safe, multicultural environment.</p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#admission">Apply / Register</a>
-          <a class="btn gold" href="#academics">Explore Programs</a>
-        </div>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tiers"><b>Three Tiers Available</b><span>Grade 7 → University Prep</span></span>
+      <h1>Create with <span class="g">AI</span></h1>
+      <p class="lead">A hands-on AI class where students <b>understand it, prompt it, and build it.</b> No experience needed — just curiosity.</p>
+      <div class="cc-line">⚡ Taught with <b>Claude Code by Anthropic</b> — the pro AI tool real developers use.</div>
+      <div class="hero-actions">
+        <a class="btn primary" href="#enroll">Enroll now</a>
+        <a class="btn ghost" href="#learn">What you'll learn</a>
       </div>
-      <div class="panel stat-card">
-        <div class="big">98%</div>
-        <div class="cap">of our <b>Class of 2026</b> graduates were accepted to the <b>University of Toronto</b> &amp; <b>University of Waterloo</b>.</div>
-        <div class="bsid">Ontario Ministry Inspected · BSID 669195</div>
+    </div>
+    <div class="hero-img"><img src="ai_hero.png" alt="Students creating with AI"></div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section id="learn">
+  <div class="wrap">
+    <p class="kicker">The Curriculum</p>
+    <h2 class="sec-title">What you'll learn</h2>
+    <p class="sec-lead">From how AI really works to building real tools with it — a ladder that grows with every tier, from Grade 7 to university prep.</p>
+    <div class="grid">
+      <div class="card"><div class="ic">🧠</div><h3>Theory of AI</h3><p>How AI actually thinks &amp; learns.</p></div>
+      <div class="card"><div class="ic">✍️</div><h3>Prompt Engineering</h3><p>Talk to AI like a pro.</p></div>
+      <div class="card"><div class="ic">🔌</div><h3>Connectors</h3><p>Link AI to your apps &amp; data so it can take action.</p></div>
+      <div class="card"><div class="ic">⚙️</div><h3>What is MCP?</h3><p>The open "USB-C for AI" — one standard for every tool.</p></div>
+    </div>
+    <p class="ccnote"><span class="star">★</span> <b>Connectors &amp; MCP</b> are how students give AI real-world tools — so it can search, build and <i>do</i>, not just chat.</p>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section>
+  <div class="wrap">
+    <div class="outcomes">
+      <div class="big">🎯</div>
+      <div class="lo">
+        <h3>Learning Outcomes</h3>
+        <div class="lorow"><span>Think like an AI engineer</span><span>Turn bold ideas into real AI tools</span><span>Master the math behind the machine</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
+<!-- DETAILS + ENROLL -->
+<section id="enroll">
   <div class="wrap">
-    <p class="kicker">About Us</p>
-    <h2 class="sec-title">A private high school built around the student</h2>
-    <p class="sec-lead">Toronto International Collegiate is a private high school inspected by the Ontario Ministry of Education (BSID 669195). We offer Ontario credit courses leading to the Ontario Secondary School Diploma (OSSD), along with tutoring, language-test preparation, workshops, and support services including homestay and visa assistance.</p>
-    <div class="grid g-4">
-      <div class="panel card">
-        <div class="ico">◆</div>
-        <h3>Education Quality</h3>
-        <p>Courses follow the Ontario curriculum and Ministry standards, credit by credit toward the OSSD.</p>
-      </div>
-      <div class="panel card">
-        <div class="ico">✦</div>
-        <h3>Expert Faculty</h3>
-        <p>Experienced, Ontario-certified teaching staff who know how to move students forward.</p>
-      </div>
-      <div class="panel card">
-        <div class="ico">⬡</div>
-        <h3>Safe &amp; Multicultural</h3>
-        <p>A welcoming, safe environment where students from around the world belong.</p>
-      </div>
-      <div class="panel card">
-        <div class="ico">▲</div>
-        <h3>Transformative</h3>
-        <p>Experiences that change how students see themselves — and what they achieve.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ACADEMICS -->
-<section id="academics">
-  <div class="wrap">
-    <p class="kicker">Academic</p>
-    <h2 class="sec-title">Programs &amp; courses</h2>
-    <p class="sec-lead">From full-time OSSD study to targeted university preparation and language training, our programs meet students wherever they are on their path to a Canadian university.</p>
-    <div class="grid g-3">
-      <div class="panel card">
-        <div class="ico">🎓</div>
-        <h3>University Preparation</h3>
-        <p>University Preparation Course &amp; Program, plus guidance through the Ontario education system and admissions.</p>
-      </div>
-      <div class="panel card">
-        <div class="ico">📚</div>
-        <h3>OSSD Credit Courses</h3>
-        <p>Grades 9–12 credit courses toward the Ontario Secondary School Diploma.</p>
-        <div class="taglist">
-          <span>Gr 9–12 English</span><span>Gr 9–12 Mathematics</span><span>Gr 9–12 Science</span><span>Intro to Computer Science</span>
-        </div>
-      </div>
-      <div class="panel card">
-        <div class="ico">🗣️</div>
-        <h3>English &amp; Test Prep</h3>
-        <p>English as a Second Language (ESL) and dedicated IELTS &amp; TOEFL preparation.</p>
-      </div>
-      <div class="panel card">
-        <div class="ico">🧭</div>
-        <h3>After-School Tutoring</h3>
-        <p>Subject-by-subject support to keep students on track and confident.</p>
-      </div>
-      <div class="panel card">
-        <div class="ico">🍁</div>
-        <h3>Quebec PEQ Immigration</h3>
-        <p>Guidance on the Quebec Experience Program pathway for eligible students.</p>
-      </div>
-      <div class="panel card">
-        <div class="ico">☀️</div>
-        <h3>Summer &amp; Winter Camps</h3>
-        <p>Seasonal camps and summer courses that keep learning going year-round.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ADMISSION -->
-<section id="admission">
-  <div class="wrap">
-    <p class="kicker">Admission</p>
-    <h2 class="sec-title">Join Toronto International Collegiate</h2>
-    <p class="sec-lead">Everything you need to enrol — registration, fees, refunds, scholarships, and seasonal programs.</p>
-    <div class="grid g-3">
-      <div class="panel card"><h3>Registration</h3><p>Start your application and secure your place for the coming term.</p></div>
-      <div class="panel card"><h3>Fees Schedule</h3><p>Transparent tuition and program fees, laid out clearly.</p></div>
-      <div class="panel card"><h3>Fees Refund</h3><p>Our refund policy, explained up front.</p></div>
-      <div class="panel card"><h3>Scholarships &amp; Awards</h3><p>Recognition and support for outstanding students.</p></div>
-      <div class="panel card"><h3>Summer / Winter Camp</h3><p>Immersive seasonal camps for new and returning students.</p></div>
-      <div class="panel card"><h3>Summer Courses</h3><p>Earn credits and get ahead over the summer term.</p></div>
-    </div>
-    <div style="margin-top:26px"><a class="btn primary" href="#contact">Register Now</a></div>
-  </div>
-</section>
-
-<!-- EVENTS -->
-<section id="events">
-  <div class="wrap">
-    <p class="kicker">News &amp; Events</p>
-    <h2 class="sec-title">What's happening on campus</h2>
-    <p class="sec-lead">Recent news, activities, and the events that bring our community together.</p>
-    <div class="grid g-2">
+    <p class="kicker">Join the Class</p>
+    <h2 class="sec-title">Details &amp; enrollment</h2>
+    <div class="two">
       <div class="panel">
-        <div class="event">
-          <div class="date"><div class="m">Mar</div><div class="d">13</div></div>
-          <div><h3>Shamrock Shake-Up</h3><p>A campus celebration on March 13, 2026.</p></div>
-        </div>
+        <div class="lbl">Class Details</div>
+        <div class="drow"><span class="di">💰</span><div><b>$395 / month</b> — once a week</div></div>
+        <div class="drow"><span class="di">🕓</span><div><b>4:00 – 6:00 PM</b></div></div>
+        <div class="drow"><span class="di">📅</span><div>Monday – Wednesday <span style="color:var(--mute)">(choose any one day)</span></div></div>
+        <div class="drow"><span class="di">📍</span><div>Unit 433, 3550 Victoria Park Ave, North York, ON M2H 2N5</div></div>
       </div>
-      <div class="panel">
-        <div class="event">
-          <div class="date"><div class="m">Feb</div><div class="d">06</div></div>
-          <div><h3>Trip to Coco</h3><p>A student outing on February 6, 2026.</p></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="event">
-          <div class="date"><div class="m">Fri</div><div class="d">✦</div></div>
-          <div><h3>Weekly Youth Group</h3><p>Community and connection, every Friday.</p></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="event">
-          <div class="date"><div class="m">Help</div><div class="d">★</div></div>
-          <div><h3>STEAM After-School Help &amp; ESL</h3><p>Ongoing STEAM support and ESL programming for all students.</p></div>
+      <div class="panel enroll">
+        <div class="qr"><img src="ti_qr.jpg" alt="Scan to enroll"></div>
+        <div class="ei">
+          <div class="lbl">Scan to Enroll</div>
+          <div class="row">📞 <b>Principal Helen Gao</b></div>
+          <div class="row"><b>416-627-4688</b></div>
+          <div class="row"><b>info@ticollegiate.com</b></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services">
+<!-- INSTRUCTOR -->
+<section>
   <div class="wrap">
-    <p class="kicker">Service</p>
-    <h2 class="sec-title">Support beyond the classroom</h2>
-    <p class="sec-lead">We help international students and families settle in with confidence.</p>
-    <div class="grid g-3">
-      <div class="panel card"><div class="ico">🛂</div><h3>Visa Service</h3><p>Guidance and assistance with student visa and study-permit matters.</p></div>
-      <div class="panel card"><div class="ico">🏠</div><h3>Residence &amp; Homestay</h3><p>Safe, supported accommodation for students studying away from home.</p></div>
-      <div class="panel card"><div class="ico">🤝</div><h3>Other Services</h3><p>Workshops and wrap-around support tailored to each student's needs.</p></div>
-    </div>
+    <p class="kicker">Your Instructor</p>
+    <h2 class="sec-title">Tony Chu</h2>
+    <p class="inst"><b>MSc physics researcher</b> with the Gravity Group at the Perimeter Institute &amp; University of Guelph, studying gravitational waves from black holes and neutron stars. He loves the meeting point of math and physics — and welcomes every curious question.</p>
   </div>
 </section>
 
-<!-- STAFF -->
-<section id="staff">
+<footer>
   <div class="wrap">
-    <p class="kicker">Meet Our Main Staff</p>
-    <h2 class="sec-title">The people behind the results</h2>
-    <p class="sec-lead">Experienced, certified educators dedicated to every student's success.</p>
-    <div class="grid g-3 staff">
-      <div class="panel card"><div class="avatar">JB</div><h3>John Blair</h3><div class="role">Principal</div><p>30+ years of experience in education.</p></div>
-      <div class="panel card"><div class="avatar">W</div><h3>Ms. Wei</h3><div class="role">Executive Principal</div><p>30+ years in education management.</p></div>
-      <div class="panel card"><div class="avatar">H</div><h3>Mr. Hesam</h3><div class="role">Social Sciences &amp; English</div><p>15 years of EFL teaching experience.</p></div>
-      <div class="panel card"><div class="avatar">MS</div><h3>Milad Safaei</h3><div class="role">Math &amp; Science</div><p>Degrees from York University.</p></div>
-      <div class="panel card"><div class="avatar">MM</div><h3>Monica Martinik</h3><div class="role">ESL Teacher</div><p>CELTA and TESOL certified.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="voices">
-  <div class="wrap">
-    <p class="kicker">Student Voices</p>
-    <h2 class="sec-title">Where our graduates land</h2>
-    <div class="grid g-3">
-      <div class="panel quote"><p>The academic support here completely transformed how I study — I arrived unsure and left ready for university.</p><div class="who">— TIC Alumnus</div></div>
-      <div class="panel quote"><p>Beyond the classroom, I got involved in volunteering and found a community that pushed me to grow.</p><div class="who">— TIC Alumna</div></div>
-      <div class="panel quote"><p>With my teachers' guidance I earned admission to the University of Toronto. I couldn't have done it alone.</p><div class="who">— TIC Alumnus</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="wrap">
-    <p class="kicker">Contact Us</p>
-    <h2 class="sec-title">Let's talk about your future</h2>
-    <p class="sec-lead">Reach out to our admissions team — we're happy to answer questions and arrange a visit.</p>
-    <div class="contact-grid">
-      <div class="panel">
-        <div class="contact-row">
-          <div class="ci">📍</div>
-          <div><div class="cl">Address</div><div class="cv">Unit 433-1, 3550 Victoria Park Ave,<br>North York, ON M2H 2N5</div></div>
-        </div>
-        <div class="contact-row">
-          <div class="ci">📞</div>
-          <div><div class="cl">Phone</div><a class="cv" href="tel:+14166274688">416-627-4688</a></div>
-        </div>
-        <div class="contact-row">
-          <div class="ci">✉️</div>
-          <div><div class="cl">Email</div><a class="cv" href="mailto:info@ticollegiate.com">info@ticollegiate.com</a></div>
-        </div>
-        <div class="contact-row">
-          <div class="ci">🏛️</div>
-          <div><div class="cl">Accreditation</div><div class="cv">Ontario Ministry Inspected · BSID 669195</div></div>
-        </div>
-      </div>
-      <div class="panel" style="padding:0;overflow:hidden">
-        <iframe title="TIC location map" width="100%" height="100%" style="border:0;min-height:320px;display:block;filter:grayscale(.3) brightness(.85) contrast(1.05)"
-          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=3550+Victoria+Park+Ave,+North+York,+ON+M2H+2N5&output=embed"></iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="foot">
-  <div class="wrap">
-    <div class="fbrand">Toronto <span>International</span> Collegiate</div>
-    <div class="socials">
-      <a href="#" aria-label="Facebook">f</a>
-      <a href="#" aria-label="Twitter">X</a>
-      <a href="#" aria-label="LinkedIn">in</a>
-      <a href="#" aria-label="YouTube">▶</a>
-    </div>
-    <div class="copy">© 2017–2026 Toronto International Collegiate · Trust. Intelligence. Care. · North York, Ontario</div>
+    <div class="ft">Think it. Prompt it. <span>Build it.</span></div>
+    <div class="cp">Toronto International Collegiate · Unit 433, 3550 Victoria Park Ave, North York, ON · <a href="https://www.ticollegiate.com">ticollegiate.com</a> · Taught with Claude Code by Anthropic</div>
   </div>
 </footer>
 
-<script>
-// close mobile menu on link tap
-document.querySelectorAll('#navlinks a').forEach(function(a){
-  a.addEventListener('click', function(){ document.getElementById('navlinks').classList.remove('open'); });
-});
-</script>
 <script src="bg.js"></script>
 </body>
 </html>
